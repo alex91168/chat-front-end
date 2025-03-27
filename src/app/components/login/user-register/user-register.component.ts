@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EndpointService } from '../../../services/endpoints/endpoint.service';
-import { UserRegister } from '../../../Models/user-register';
+import { UserRegister } from '../../../Models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-register',
@@ -10,7 +11,7 @@ import { UserRegister } from '../../../Models/user-register';
   styleUrl: './user-register.component.scss'
 })
 export class UserRegisterComponent {
-  constructor ( private formBuild: FormBuilder, private endpoint: EndpointService){}
+  constructor ( private formBuild: FormBuilder, private endpoint: EndpointService, private router: Router){}
   @Output() setUserInput = new EventEmitter<string>();
   formRegister!: FormGroup;
 
@@ -32,7 +33,10 @@ export class UserRegisterComponent {
   }
   registerUser(userRegister: UserRegister): void {
     this.endpoint.register_user(userRegister).subscribe({
-      next: () => {},
+      next: (data) => {
+        console.log(data)
+        this.router.navigate(["/email-activation"])
+      },
       error: (err) => console.log(err)
     })
   }

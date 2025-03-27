@@ -4,3 +4,8 @@ export interface UserRegister {
     repassword: string
     email: string
 }
+
+export interface UserLogin {
+    user: string,
+    password: string
+}
