@@ -1,23 +1,23 @@
 <div class="form-container register-form">
-    <form>
+    <form [formGroup]="formRegister" (ngSubmit)="formSubmit()">
         <div>
-            <label>Nome de usuário</label>
-            <input type="text">
+            <label for="user">Nome de usuário</label>
+            <input type="text" autocomplete="off" formControlName="user">
         </div>
         <div>
-            <label>Email</label>
-            <input type="text">
+            <label for="email">Email</label>
+            <input type="text" autocomplete="off" formControlName="email">
         </div>
         <div>
-            <label>Digite sua senha</label>
-            <input type="text">
+            <label for="password">Digite sua senha</label>
+            <input type="password" formControlName="password">
         </div>
         <div>
-            <label>Digite sua senha novamente</label>
-            <input type="text">
+            <label for="repassword">Digite sua senha novamente</label>
+            <input type="password" formControlName="repassword">
         </div>
         <div>
-            <button>Registrar</button>
+            <button type="submit">Registrar</button>
         </div>
     </form>
 </div>
