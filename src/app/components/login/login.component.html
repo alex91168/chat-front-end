@@ -1,1 +1,10 @@
-<p>login works!</p>
+<h2>Login text !</h2>
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio aliquid quasi iure et voluptatem ipsam beatae commodi illum voluptas aut. Fuga, aliquid expedita. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum est nostrum quidem eius ipsa quisquam rem adipisci soluta nihil ea odio iste laboriosam, animi dicta ratione quam commodi illum cum repudiandae molestias explicabo?</p>
+
+<ng-container *ngIf="userInput === 'login'">
+    <app-user-login (setUserInput)="setUserInput($event)"></app-user-login>
+</ng-container>
+
+<ng-container *ngIf="userInput === 'register'">
+    <app-user-register (setUserInput)="setUserInput($event)"></app-user-register>
+</ng-container>

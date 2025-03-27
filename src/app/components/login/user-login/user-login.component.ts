@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-login',
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './user-login.component.scss'
 })
 export class UserLoginComponent {
+  
+  @Output() setUserInput = new EventEmitter<string>();
 
+  clickRegister(): void {
+    this.setUserInput.emit("register");
+  }
 }
+
