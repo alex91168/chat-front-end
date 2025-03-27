@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EndpointService } from '../../../services/endpoints/endpoint.service';
+import { UserRegister } from '../../../Models/user-register';
 
 @Component({
   selector: 'app-user-register',
@@ -8,23 +10,31 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './user-register.component.scss'
 })
 export class UserRegisterComponent {
-  constructor ( private formBuild: FormBuilder){}
+  constructor ( private formBuild: FormBuilder, private endpoint: EndpointService){}
   @Output() setUserInput = new EventEmitter<string>();
   formRegister!: FormGroup;
 
   ngOnInit(): void {
     this.formRegister = this.formBuild.group({
-      user: [''],
-      password: [''],
-      repassword: [''],
-      email: ['']
+      user: ['', Validators.required],
+      password: ['', Validators.required],
+      repassword: ['', Validators.required],
+      email: ['', Validators.email]
     })
   }
 
   formSubmit(): void {
     if (!this.formRegister.valid) throw new Error("Formulário inválido.")
-    const formRegister = this.formRegister.value;
-    console.log("Formulario de registro", formRegister)
+    const userInfo: UserRegister = this.formRegister.value;
+    if (userInfo.password !== userInfo.repassword) throw new Error("As senhas devem ser iguais.")
+    this.registerUser(userInfo)
+    console.log("Formulario de registro", userInfo)
+  }
+  registerUser(userRegister: UserRegister): void {
+    this.endpoint.register_user(userRegister).subscribe({
+      next: () => {},
+      error: (err) => console.log(err)
+    })
   }
   clickLogin(): void {
     this.setUserInput.emit("login");
